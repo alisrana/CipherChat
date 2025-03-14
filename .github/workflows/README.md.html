@@ -1,0 +1,90 @@
+# CipherChat - Secure Messaging App
+
+CipherChat is a Progressive Web App (PWA) that provides secure messaging with 256-bit encryption and AI-powered features. The app works on both Android and iOS devices and can be installed as a native-like app.
+
+## Features
+
+- **End-to-End Encryption**: All messages are secured with 256-bit AES encryption
+- **AI-Powered Features**: Smart replies, message summarization, and content suggestions
+- **Progressive Web App**: Install on any device for a native app experience
+- **Offline Support**: Basic functionality works without an internet connection
+- **Cross-Platform**: Works on Android, iOS, and desktop browsers
+- **Mobile Optimized**: Touch gestures, responsive design, and mobile-friendly UI
+
+## Installation Instructions
+
+### For Users
+
+#### On Android:
+1. Open the CipherChat website in Chrome
+2. Tap the menu button (three dots) in the top-right corner
+3. Select "Add to Home Screen"
+4. Follow the prompts to install the app
+
+#### On iOS:
+1. Open the CipherChat website in Safari
+2. Tap the Share button at the bottom of the screen
+3. Scroll down and select "Add to Home Screen"
+4. Tap "Add" in the top-right corner
+
+### For Developers
+
+#### Local Development
+1. Clone this repository
+2. Generate app icons by running `node generate-icons.js` (requires Node.js)
+3. Serve the files using a local web server:
+   ```
+   npx serve
+   ```
+4. Open `http://localhost:5000` in your browser
+
+#### Deployment
+You can deploy CipherChat to any static hosting service:
+
+**Netlify (Recommended)**
+1. Sign up for a free Netlify account
+2. Drag and drop the project folder to the Netlify dashboard
+3. Your app will be deployed with a custom URL
+
+**Vercel**
+1. Install Vercel CLI: `npm i -g vercel`
+2. Run `vercel` in the project directory
+3. Follow the prompts to deploy
+
+**GitHub Pages**
+1. Create a GitHub repository
+2. Push the project files to the repository
+3. Enable GitHub Pages in the repository settings
+
+## Security Features
+
+- **AES-256 Encryption**: Military-grade encryption for all messages
+- **Client-Side Encryption**: Messages are encrypted on your device before transmission
+- **Zero Knowledge Architecture**: We don't have access to your encryption keys or messages
+- **Perfect Forward Secrecy**: New encryption keys for each conversation
+- **Local AI Processing**: All AI features run on your device, not in the cloud
+
+## Mobile-Specific Features
+
+- **Swipe Gestures**: Swipe right to open sidebar, swipe left to close
+- **Double-Tap to Like**: Double tap on messages to send a heart reaction
+- **Pull-to-Refresh**: Pull down to refresh messages
+- **Offline Mode**: Basic functionality works without internet
+- **Push Notifications**: Get notified of new messages (requires permission)
+- **Home Screen Installation**: Install as a native app on your device
+
+## Browser Compatibility
+
+- Chrome (Android, Desktop)
+- Safari (iOS, macOS)
+- Firefox (Android, Desktop)
+- Edge (Windows)
+- Samsung Internet (Android)
+
+## License
+
+MIT License
+
+## Contact
+
+For support or inquiries, contact support@cipherchat.com

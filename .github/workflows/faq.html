@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CipherChat - FAQ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #10b981;
+            --dark: #1e293b;
+            --darker: #0f172a;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --light-gray: #e2e8f0;
+            --danger: #ef4444;
+            --success: #10b981;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--darker);
+            color: var(--light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            width: 100%;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--dark);
+            padding: 1rem 0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--light);
+            text-decoration: none;
+        }
+
+        .logo i {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-link {
+            color: var(--light-gray);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--light);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            outline: none;
+            font-size: 0.875rem;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--light);
+            border: 1px solid var(--light-gray);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--light);
+            transform: translateY(-2px);
+        }
+
+        /* Main Content Styles */
+        main {
+            flex: 1;
+            padding: 3rem 0;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-subtitle {
+            font-size: 1.25rem;
+            color: var(--gray);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* FAQ Layout */
+        .faq-layout {
+            display: flex;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .faq-sidebar {
+            width: 250px;
+            flex-shrink: 0;
+        }
+
+        .faq-content {
+            flex: 1;
+        }
+
+        .faq-nav {
+            background-color: var(--dark);
+            border-radius: 0.5rem;
+            overflow: hidden;
+            position: sticky;
+            top: 2rem;
+        }
+
+        .faq-nav-title {
+            padding: 1rem;
+            font-weight: 600;
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .faq-nav-links {
+            list-style: none;
+        }
+
+        .faq-nav-link {
+            padding: 0.75rem 1rem;
+            color: var(--light);
+            text-decoration: none;
+            display: block;
+            transition: background-color 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .faq-nav-link:hover, .faq-nav-link.active {
+            background-color: rgba(99, 102, 241, 0.1);
+            border-left-color: var(--primary);
+        }
+
+        .faq-section {
+            margin-bottom: 3rem;
+            scroll-margin-top: 2rem;
+        }
+
+        .faq-section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .faq-section-title i {
+            color: var(--primary);
+        }
+
+        .faq-items {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .faq-item {
+            background-color: var(--dark);
+            border-radius: 0.5rem;
+            overflow: hidden;
+        }
+
+        .faq-question {
+            padding: 1.25rem;
+            font-weight: 600;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: background-color 0.3s ease;
+        }
+
+        .faq-question:hover {
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .faq-question i {
+            transition: transform 0.3s ease;
+        }
+
+        .faq-answer {
+            padding: 0 1.25rem;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+            color: var(--light-gray);
+            line-height: 1.6;
+        }
+
+        .faq-item.active .faq-question {
+            background-color: rgba(99, 102, 241, 0.1);
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding: 0 1.25rem 1.25rem;
+        }
+
+        /* Search Box */
+        .search-container {
+            margin-bottom: 2rem;
+        }
+
+        .search-box {
+            display: flex;
+            gap: 0.5rem;
+            background-color: var(--dark);
+            border-radius: 0.5rem;
+            padding: 0.5rem 1rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .search-input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            color: var(--light);
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .search-icon {
+            color: var(--gray);
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background-color: var(--dark);
+            border-radius: 0.5rem;
+            padding: 2rem;
+            margin-top: 3rem;
+            text-align: center;
+        }
+
+        .contact-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .contact-description {
+            color: var(--light-gray);
+            margin-bottom: 1.5rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .contact-options {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+
+        .contact-option {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .contact-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background-color: rgba(99, 102, 241, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .contact-label {
+            font-weight: 600;
+        }
+
+        .contact-value {
+            color: var(--gray);
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: var(--dark);
+            padding: 2rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 3rem;
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-link {
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--light);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-link {
+            color: var(--gray);
+            font-size: 1.25rem;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .social-link:hover {
+            color: var(--light);
+            transform: translateY(-3px);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                margin: 1rem 0;
+            }
+
+            .footer-container {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .faq-layout {
+                flex-direction: column;
+            }
+
+            .faq-sidebar {
+                width: 100%;
+            }
+
+            .contact-options {
+                flex-direction: column;
+                align-items: center;
+                gap: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="index" class="logo">
+                <i class="fas fa-shield-alt"></i>
+                CipherChat
+            </a>
+            <nav class="nav-links">
+                <a href="index#features" class="nav-link">Features</a>
+                <a href="security" class="nav-link">Security</a>
+                <a href="ai-features" class="nav-link">AI Features</a>
+                <a href="comparison" class="nav-link">Comparison</a>
+            </nav>
+            <div class="auth-buttons">
+                <a href="index" class="btn btn-outline">Login</a>
+                <a href="index" class="btn btn-primary">Sign Up</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="page-header">
+                <h1 class="page-title">Frequently Asked Questions</h1>
+                <p class="page-subtitle">Find answers to common questions about CipherChat's features, security, and privacy practices.</p>
+            </div>
+
+            <div class="search-container">
+                <div class="search-box">
+                    <i class="fas fa-search search-icon"></i>
+                    <input type="text" class="search-input" placeholder="Search for questions..." id="faqSearch">
+                </div>
+            </div>
+
+            <div class="faq-layout">
+                <div class="faq-sidebar">
+                    <div class="faq-nav">
+                        <div class="faq-nav-title">Categories</div>
+                        <ul class="faq-nav-links">
+                            <li><a href="#general" class="faq-nav-link active">General Questions</a></li>
+                            <li><a href="#security" class="faq-nav-link">Security & Privacy</a></li>
+                            <li><a href="#ai" class="faq-nav-link">AI Features</a></li>
+                            <li><a href="#account" class="faq-nav-link">Account Management</a></li>
+                            <li><a href="#technical" class="faq-nav-link">Technical Support</a></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="faq-content">
+                    <section id="general" class="faq-section">
+                        <h2 class="faq-section-title">
+                            <i class="fas fa-info-circle"></i>
+                            General Questions
+                        </h2>
+                        <div class="faq-items">
+                            <div class="faq-item active">
+                                <div class="faq-question">
+                                    <span>What is CipherChat?</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="faq-answer">
+                                    <p>CipherChat is a secure messaging platform that combines military-grade encryption with advanced AI features. We provide end-to-end encrypted messaging, voice and video calls, file sharing, and intelligent features like smart replies and message summarization—all while maintaining the highest standards of privacy and security.</p>
+                                </div>
+                            </div>
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    <span>Is CipherChat free to use?</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="faq-answer">
+                                    <p>Yes, CipherChat's core features are free for all users. We offer a premium subscription plan that provides additional features such as increased file storage, advanced AI capabilities, and priority support. However, all security and encryption features are available to all users at no cost.</p>
+                                </div>
+                            </div>
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    <span>Which platforms does CipherChat support?</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="faq-answer">
+                                    <p>CipherChat is available on iOS, Android, Windows, macOS, and Linux. We also offer a web version that works in most modern browsers. Your messages sync seamlessly across all your devices while maintaining end-to-end encryption.</p>
+                                </div>
+                            </div>
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    <span>How is CipherChat different from other messaging apps?</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="faq-answer">
+                                    <p>CipherChat stands out by combining the highest level of security (AES-256 encryption) with advanced AI features that run locally on your device. Unlike other platforms that compromise privacy for convenience, we've built AI capabilities that don't require sending your data to cloud servers. Additionally, our zero-knowledge architecture means we never have access to your messages or encryption keys.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="security" class="faq-section">
+                        <h2 class="faq-section-title">
+                            <i class="fas fa-shield-alt"></i>
+                            Security & Privacy
+                        </h2>
+                        <div class="faq-items">
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    <span>What encryption does CipherChat use?</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="faq-answer">
+                                    <p>CipherChat uses AES-256 encryption, which is the same standard used by governments and military organizations to protect classified information. We implement end-to-end encryption, meaning messages are encrypted on your device and can only be decrypted by the intended recipient. We also employ perfect forward secrecy, which generates new encryption keys for each conversation.</p>
+                                </div>
+                            </div>
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    <span>Can CipherChat read my messages?</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="faq-answer">
+                                    <p>No. With our end-to-end encryption and zero-knowledge architecture, your messages are encrypted on your device and can only be decrypted by the intended recipient. We don't have access to your encryption keys, so we can't read your messages even if we wanted to. This is a fundamental principle of our design.</p>
+                                </div>
+                            </div>
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    <span>How does CipherChat handle metadata?</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="faq-answer">
+                                    <p>We minimize metadata collection and encrypt what little we do collect whenever possible. The only metadata we retain is what's absolutely necessary to route messages and maintain service quality. We never log IP addresses, location data, or browsing activity. Additionally, we regularly purge metadata from our systems to further protect your privacy.</p>
+                                </div>
+                            </div>
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    <span>Has CipherChat been audited by security experts?</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="faq-answer">
+                                    <p>Yes, CipherChat's encryption protocols and implementation have been independently audited by respected security researchers. We conduct regular security audits and penetration testing to ensure the highest level of security. Our code is also open source, allowing the security community to review and verify our implementation.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="ai" class="faq-section">
+                        <h2 class="faq-section-title">
+                            <i class="fas fa-robot"></i>
+                            AI Features
+                        </h2>
+                        <div class="faq-items">
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    <span>How do AI features work with encryption?</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="faq-answer">
+                                    <p>Our AI features work locally on your device. When you use features like smart replies or message summarization, the processing happens on your device after the messages have been decrypted. Your encrypted messages are never sent to our servers for AI processing, maintaining the integrity of our end-to-end encryption.</p>
+                                </div>
+                            </div>
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    <span>What AI features does CipherChat offer?</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="faq-answer">
+                                    <p>CipherChat offers several AI-powered features, including:</p>
+                                    <ul style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                                        <li>Smart Replies: Contextually relevant response suggestions</li>
+                                        <li>Message Summarization: Concise summaries of long conversations</li>
+                                        <li>Real-Time Translation: Secure translation across 50+ languages</li>
+                                        <li>Content Generation: AI-assisted message drafting</li>
+                                        <li>Sentiment Analysis: Understanding the tone of conversations</li>
+                                    </ul>
+                                    <p style="margin-top: 0.5rem;">All these features run locally on your device to maintain privacy.</p>
+                                </div>
+                            </div>
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    <span>Does the AI learn from my messages over time?</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="faq-answer">
+                                    <p>Yes, the AI can learn from your communication style to provide more personalized suggestions, but this learning happens locally on your device. Your message data is never sent to our servers for training purposes. You can also reset the AI's learning at any time from the settings menu.</p>
+                                </div>
+                            </div>
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    <span>Can I disable AI features if I don't want to use them?</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="faq-answer">
+                                    <p>Absolutely. All AI features in CipherChat are opt-in and can be disabled at any time from the settings menu. You can choose which specific AI features you want to use and which ones you prefer to disable.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="account" class="faq-section">
+                        <h2 class="faq-section-title">
+                            <i class="fas fa-user-circle"></i>
+                            Account Management
+                        </h2>
+                        <div class="faq-items">
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    <span>Do I need a phone number to sign up?</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="faq-answer">
+                                    <p>No, CipherChat does not require a phone number for registration. You can sign up using just an email address, or even create an account with a username only. This provides an additional layer of privacy compared to messaging apps that require phone number verification.</p>
+                                </div>
+                            </div>
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    <span>What happens if I lose my device?</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="faq-answer">
+                                    <p>If you lose your device, you can remotely log out of your CipherChat account from another device or through our website. Additionally, you can set up a recovery key during account creation that allows you to restore access to your account and messages from a new device. We recommend enabling this feature for all users.</p>
+                                </div>
+                            </div>
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    <span>How do I delete my account?</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="faq-answer">
+                                    <p>You can delete your account at any time by going to Settings > Account > Delete Account. When you delete your account, all your messages, files, and personal data are permanently removed from our servers. Due to our end-to-end encryption, we don't have access to your message content even before deletion.</p>
+                                </div>
+                            </div>
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    <span>Can I use CipherChat on multiple devices?</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="faq-answer">
+                                    <p>Yes, you can use CipherChat on multiple devices simultaneously. Your messages will sync across all your devices while maintaining end-to-end encryption. We use a secure device linking protocol that ensures your encryption keys are safely transferred between devices without exposing them to our servers.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+
+                    <section id="technical" class="faq-section">
+                        <h2 class="faq-section-title">
+                            <i class="fas fa-cogs"></i>
+                            Technical Support
+                        </h2>
+                        <div class="faq-items">
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    <span>How do I report a bug?</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="faq-answer">
+                                    <p>You can report bugs by going to Settings > Help & Support > Report a Bug. Alternatively, you can email our support team at support@cipherchat.com. Please include as much detail as possible, including your device model, operating system version, and steps to reproduce the issue.</p>
+                                </div>
+                            </div>
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    <span>What should I do if I'm having connection issues?</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="faq-answer">
+                                    <p>If you're experiencing connection issues:</p>
+                                    <ol style="margin-left: 1.5rem; margin-top: 0.5rem;">
+                                        <li>Check your internet connection</li>
+                                        <li>Restart the app</li>
+                                        <li>Update to the latest version</li>
+                                        <li>Try connecting through a different network</li>
+                                        <li>If you're in a country with internet restrictions, enable the built-in proxy in Settings > Network > Use Proxy</li>
+                                    </ol>
+                                    <p style="margin-top: 0.5rem;">If problems persist, please contact our support team.</p>
+                                </div>
+                            </div>
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    <span>How do I recover lost messages?</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="faq-answer">
+                                    <p>If you've enabled backups in Settings > Chats > Backup, you can restore your messages from your last backup. Backups are encrypted with your account key and can be stored locally or in your preferred cloud storage. Without a backup, message recovery may not be possible due to our end-to-end encryption.</p>
+                                </div>
+                            </div>
+                            <div class="faq-item">
+                                <div class="faq-question">
+                                    <span>Is CipherChat open source?</span>
+                                    <i class="fas fa-chevron-down"></i>
+                                </div>
+                                <div class="faq-answer">
+                                    <p>Yes, CipherChat is open source. Our code is available for review on GitHub, allowing security researchers and the community to verify our implementation and suggest improvements. We believe in transparency and that security is strengthened through open review.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </section>
+                </div>
+            </div>
+
+            <section class="contact-section">
+                <h2 class="contact-title">Still Have Questions?</h2>
+                <p class="contact-description">If you couldn't find the answer you were looking for, feel free to reach out to our support team. We're here to help!</p>
+                <a href="#" class="btn btn-primary">Contact Support</a>
+                <div class="contact-options">
+                    <div class="contact-option">
+                        <div class="contact-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <div class="contact-label">Email</div>
+                        <div class="contact-value">support@cipherchat.com</div>
+                    </div>
+                    <div class="contact-option">
+                        <div class="contact-icon">
+                            <i class="fas fa-comments"></i>
+                        </div>
+                        <div class="contact-label">Live Chat</div>
+                        <div class="contact-value">Available 24/7</div>
+                    </div>
+                    <div class="contact-option">
+                        <div class="contact-icon">
+                            <i class="fas fa-book"></i>
+                        </div>
+                        <div class="contact-label">Knowledge Base</div>
+                        <div class="contact-value">Browse Articles</div>
+                    </div>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container footer-container">
+            <div class="footer-links">
+                <a href="#" class="footer-link">Privacy Policy</a>
+                <a href="#" class="footer-link">Terms of Service</a>
+                <a href="#" class="footer-link">Contact Us</a>
+                <a href="#" class="footer-link">FAQ</a>
+            </div>
+            <div class="social-links">
+                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // FAQ accordion functionality
+        const faqItems = document.querySelectorAll('.faq-item');
+        
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            
+            question.addEventListener('click', () => {
+                item.classList.toggle('active');
+            });
+        });
+
+        // Navigation highlighting
+        const navLinks = document.querySelectorAll('.faq-nav-link');
+        
+        navLinks.forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.forEach(otherLink => {
+                    otherLink.classList.remove('active');
+                });
+                link.classList.add('active');
+            });
+        });
+
+        // Search functionality
+        const searchInput = document.getElementById('faqSearch');
+        
+        searchInput.addEventListener('input', () => {
+            const searchTerm = searchInput.value.toLowerCase();
+            
+            faqItems.forEach(item => {
+                const question = item.querySelector('.faq-question span').textContent.toLowerCase();
+                const answer = item.querySelector('.faq-answer').textContent.toLowerCase();
+                
+                if (question.includes(searchTerm) || answer.includes(searchTerm)) {
+                    item.style.display = 'block';
+                } else {
+                    item.style.display = 'none';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

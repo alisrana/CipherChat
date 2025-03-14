@@ -1,0 +1,898 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CipherChat - AI Features</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #10b981;
+            --dark: #1e293b;
+            --darker: #0f172a;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --light-gray: #e2e8f0;
+            --danger: #ef4444;
+            --success: #10b981;
+            --warning: #f59e0b;
+            --info: #0ea5e9;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--darker);
+            color: var(--light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            width: 100%;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--dark);
+            padding: 1rem 0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--light);
+            text-decoration: none;
+        }
+
+        .logo i {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-link {
+            color: var(--light-gray);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--light);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            outline: none;
+            font-size: 0.875rem;
+            text-decoration: none;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--light);
+            border: 1px solid var(--light-gray);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--light);
+            transform: translateY(-2px);
+        }
+
+        /* Main Content Styles */
+        main {
+            flex: 1;
+            padding: 3rem 0;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-subtitle {
+            font-size: 1.25rem;
+            color: var(--gray);
+            max-width: 800px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* AI Features Section */
+        .ai-section {
+            margin-bottom: 5rem;
+        }
+
+        .section-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-align: center;
+        }
+
+        .section-subtitle {
+            font-size: 1.25rem;
+            color: var(--gray);
+            max-width: 800px;
+            margin: 0 auto 3rem;
+            text-align: center;
+            line-height: 1.6;
+        }
+
+        /* Feature Demo */
+        .feature-demo {
+            display: flex;
+            align-items: center;
+            gap: 3rem;
+            margin-bottom: 5rem;
+        }
+
+        .feature-demo:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .demo-content {
+            flex: 1;
+        }
+
+        .demo-title {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            color: var(--primary);
+        }
+
+        .demo-description {
+            color: var(--light-gray);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .demo-points {
+            margin-left: 1.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .demo-points li {
+            margin-bottom: 0.75rem;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .demo-points li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--primary);
+        }
+
+        .demo-visual {
+            flex: 1;
+            background-color: var(--dark);
+            border-radius: 0.5rem;
+            overflow: hidden;
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .chat-demo {
+            padding: 1.5rem;
+            height: 400px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .chat-header {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding-bottom: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 1rem;
+        }
+
+        .chat-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            color: white;
+        }
+
+        .chat-name {
+            font-weight: 600;
+        }
+
+        .chat-status {
+            font-size: 0.875rem;
+            color: var(--gray);
+        }
+
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .message {
+            display: flex;
+            gap: 0.5rem;
+            max-width: 80%;
+        }
+
+        .message.sent {
+            align-self: flex-end;
+            flex-direction: row-reverse;
+        }
+
+        .message-bubble {
+            padding: 0.75rem 1rem;
+            border-radius: 1rem;
+            background-color: #334155;
+            position: relative;
+        }
+
+        .message.sent .message-bubble {
+            background-color: var(--primary);
+            border-bottom-right-radius: 0;
+        }
+
+        .message.received .message-bubble {
+            border-bottom-left-radius: 0;
+        }
+
+        .message-text {
+            line-height: 1.5;
+        }
+
+        .ai-suggestions {
+            padding: 0.75rem;
+            background-color: rgba(99, 102, 241, 0.1);
+            border-radius: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .ai-title {
+            font-size: 0.875rem;
+            font-weight: 600;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .suggestion-chips {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .suggestion-chip {
+            padding: 0.5rem 0.75rem;
+            background-color: var(--dark);
+            border-radius: 1rem;
+            font-size: 0.875rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .suggestion-chip:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .chat-input {
+            display: flex;
+            gap: 0.75rem;
+            align-items: center;
+        }
+
+        .message-input {
+            flex: 1;
+            padding: 0.75rem 1rem;
+            border-radius: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            background-color: var(--darker);
+            color: var(--light);
+        }
+
+        .send-btn {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+        }
+
+        /* Translation Demo */
+        .translation-demo {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            padding: 1.5rem;
+        }
+
+        .language-selector {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 1rem;
+        }
+
+        .language-option {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background-color: var(--darker);
+            border-radius: 0.375rem;
+            cursor: pointer;
+        }
+
+        .language-flag {
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            overflow: hidden;
+        }
+
+        .translation-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .translation-box {
+            padding: 1rem;
+            background-color: var(--darker);
+            border-radius: 0.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .translation-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .translation-title {
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .translation-content {
+            line-height: 1.6;
+        }
+
+        /* Summary Demo */
+        .summary-demo {
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .conversation-container {
+            background-color: var(--darker);
+            border-radius: 0.5rem;
+            padding: 1rem;
+            max-height: 200px;
+            overflow-y: auto;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .conversation-message {
+            margin-bottom: 0.75rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .message-sender {
+            font-weight: 600;
+            margin-bottom: 0.25rem;
+        }
+
+        .summary-button {
+            align-self: center;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background-color: var(--primary);
+            color: white;
+            border-radius: 0.375rem;
+            cursor: pointer;
+            font-weight: 500;
+        }
+
+        .summary-result {
+            background-color: rgba(16, 185, 129, 0.1);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+            border-radius: 0.5rem;
+            padding: 1rem;
+        }
+
+        .summary-header {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--success);
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+        }
+
+        /* Privacy Section */
+        .privacy-section {
+            background-color: var(--dark);
+            border-radius: 0.5rem;
+            padding: 2rem;
+            margin: 3rem 0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .privacy-content {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .privacy-text {
+            flex: 1;
+        }
+
+        .privacy-title {
+            font-size: 1.75rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+        }
+
+        .privacy-description {
+            color: var(--light-gray);
+            line-height: 1.7;
+            margin-bottom: 1.5rem;
+        }
+
+        .privacy-icon {
+            font-size: 5rem;
+            color: var(--primary);
+            opacity: 0.8;
+        }
+
+        /* CTA Section */
+        .cta-section {
+            background: linear-gradient(to right, var(--primary-dark), var(--primary));
+            border-radius: 0.5rem;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .cta-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .cta-text {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-light {
+            background-color: white;
+            color: var(--primary-dark);
+        }
+
+        .btn-light:hover {
+            background-color: var(--light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: var(--dark);
+            padding: 2rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-link {
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--light);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-link {
+            color: var(--gray);
+            font-size: 1.25rem;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .social-link:hover {
+            color: var(--light);
+            transform: translateY(-3px);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                margin: 1rem 0;
+            }
+
+            .footer-container {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .feature-demo {
+                flex-direction: column !important;
+                gap: 2rem;
+            }
+
+            .privacy-content {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="index" class="logo">
+                <i class="fas fa-shield-alt"></i>
+                CipherChat
+            </a>
+            <nav class="nav-links">
+                <a href="index#features" class="nav-link">Features</a>
+                <a href="security" class="nav-link">Security</a>
+                <a href="#" class="nav-link">AI Features</a>
+                <a href="comparison" class="nav-link">Comparison</a>
+            </nav>
+            <div class="auth-buttons">
+                <a href="index" class="btn btn-outline">Login</a>
+                <a href="index" class="btn btn-primary">Sign Up</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="page-header">
+                <h1 class="page-title">AI-Powered Secure Messaging</h1>
+                <p class="page-subtitle">CipherChat combines military-grade encryption with cutting-edge AI capabilities to create a messaging experience that's both secure and intelligent.</p>
+            </div>
+
+            <section class="ai-section">
+                <h2 class="section-title">Smart Features That Respect Your Privacy</h2>
+                <p class="section-subtitle">All AI processing happens locally on your device, ensuring your messages never leave your control for analysis.</p>
+
+                <div class="feature-demo">
+                    <div class="demo-content">
+                        <h3 class="demo-title">Smart Replies</h3>
+                        <p class="demo-description">Our AI analyzes conversation context to suggest relevant responses, saving you time while maintaining privacy.</p>
+                        <ul class="demo-points">
+                            <li>Context-aware suggestions that actually make sense</li>
+                            <li>On-device processing ensures your messages stay private</li>
+                            <li>Learns from your communication style over time</li>
+                            <li>Supports multiple languages and communication styles</li>
+                        </ul>
+                        <a href="index" class="btn btn-primary">Try Smart Replies</a>
+                    </div>
+                    <div class="demo-visual">
+                        <div class="chat-demo">
+                            <div class="chat-header">
+                                <div class="chat-avatar">A</div>
+                                <div>
+                                    <div class="chat-name">Alice Smith</div>
+                                    <div class="chat-status">Online</div>
+                                </div>
+                            </div>
+                            <div class="chat-messages">
+                                <div class="message received">
+                                    <div class="chat-avatar">A</div>
+                                    <div class="message-bubble">
+                                        <div class="message-text">Hey! Are we still meeting tomorrow at 2pm for the project discussion?</div>
+                                    </div>
+                                </div>
+                                <div class="message sent">
+                                    <div class="chat-avatar">Y</div>
+                                    <div class="message-bubble">
+                                        <div class="message-text">Hi Alice! Yes, I've got it in my calendar.</div>
+                                    </div>
+                                </div>
+                                <div class="message received">
+                                    <div class="chat-avatar">A</div>
+                                    <div class="message-bubble">
+                                        <div class="message-text">Great! I was thinking we should focus on the security implementation first. What do you think?</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="ai-suggestions">
+                                <div class="ai-title">
+                                    <i class="fas fa-robot"></i>
+                                    <span>AI Suggestions</span>
+                                </div>
+                                <div class="suggestion-chips">
+                                    <div class="suggestion-chip">That sounds like a good approach</div>
+                                    <div class="suggestion-chip">I agree, security should be our priority</div>
+                                    <div class="suggestion-chip">I have some ideas about the encryption method</div>
+                                </div>
+                            </div>
+                            <div class="chat-input">
+                                <input type="text" class="message-input" placeholder="Type a message...">
+                                <div class="send-btn">
+                                    <i class="fas fa-paper-plane"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-demo">
+                    <div class="demo-content">
+                        <h3 class="demo-title">Real-Time Translation</h3>
+                        <p class="demo-description">Break language barriers while maintaining end-to-end encryption with our secure translation feature.</p>
+                        <ul class="demo-points">
+                            <li>Supports over 50 languages with high accuracy</li>
+                            <li>Messages remain encrypted during translation</li>
+                            <li>Translate entire conversations with one click</li>
+                            <li>Automatically detects language for seamless communication</li>
+                        </ul>
+                        <a href="index" class="btn btn-primary">Explore Translation</a>
+                    </div>
+                    <div class="demo-visual">
+                        <div class="translation-demo">
+                            <div class="language-selector">
+                                <div class="language-option">
+                                    <div class="language-flag">🇺🇸</div>
+                                    <span>English</span>
+                                </div>
+                                <i class="fas fa-exchange-alt"></i>
+                                <div class="language-option">
+                                    <div class="language-flag">🇯🇵</div>
+                                    <span>Japanese</span>
+                                </div>
+                            </div>
+                            <div class="translation-container">
+                                <div class="translation-box">
+                                    <div class="translation-header">
+                                        <div class="translation-title">Original Message (English)</div>
+                                        <i class="fas fa-lock" title="End-to-End Encrypted"></i>
+                                    </div>
+                                    <div class="translation-content">
+                                        Hello! I'm excited about our collaboration. Can we schedule a meeting next week to discuss the project details?
+                                    </div>
+                                </div>
+                                <div class="translation-box">
+                                    <div class="translation-header">
+                                        <div class="translation-title">Translated Message (Japanese)</div>
+                                        <i class="fas fa-lock" title="End-to-End Encrypted"></i>
+                                    </div>
+                                    <div class="translation-content">
+                                        こんにちは！コラボレーションについて楽しみにしています。来週、プロジェクトの詳細について話し合うために会議を設定できますか？
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="feature-demo">
+                    <div class="demo-content">
+                        <h3 class="demo-title">Conversation Summarization</h3>
+                        <p class="demo-description">Quickly catch up on long conversations with AI-generated summaries that highlight key points and action items.</p>
+                        <ul class="demo-points">
+                            <li>Summarizes conversations of any length in seconds</li>
+                            <li>Identifies key decisions and action items</li>
+                            <li>Customizable summary length and focus</li>
+                            <li>Works across group chats and one-on-one conversations</li>
+                        </ul>
+                        <a href="index" class="btn btn-primary">See Summarization</a>
+                    </div>
+                    <div class="demo-visual">
+                        <div class="summary-demo">
+                            <div class="conversation-container">
+                                <div class="conversation-message">
+                                    <div class="message-sender">Alice:</div>
+                                    <div>Hi team, I wanted to discuss the timeline for the new product launch. Marketing suggests we aim for early October.</div>
+                                </div>
+                                <div class="conversation-message">
+                                    <div class="message-sender">Bob:</div>
+                                    <div>October sounds good. Development needs at least 6 more weeks to finalize the core features.</div>
+                                </div>
+                                <div class="conversation-message">
+                                    <div class="message-sender">Carol:</div>
+                                    <div>The design team can have assets ready by mid-September. We'll need final specs by August 15th.</div>
+                                </div>
+                                <div class="conversation-message">
+                                    <div class="message-sender">Alice:</div>
+                                    <div>Great. Let's set October 10th as our target launch date. Bob, can your team meet that deadline?</div>
+                                </div>
+                                <div class="conversation-message">
+                                    <div class="message-sender">Bob:</div>
+                                    <div>Yes, we can make October 10th work if we prioritize the core features and push some secondary features to the next update.</div>
+                                </div>
+                                <div class="conversation-message">
+                                    <div class="message-sender">Carol:</div>
+                                    <div>Sounds good to me. I'll update the project timeline and share it with everyone by tomorrow.</div>
+                                </div>
+                            </div>
+                            <div class="summary-button">
+                                <i class="fas fa-robot"></i>
+                                <span>Generate Summary</span>
+                            </div>
+                            <div class="summary-result">
+                                <div class="summary-header">
+                                    <i class="fas fa-file-alt"></i>
+                                    <span>AI Summary</span>
+                                </div>
+                                <div>
+                                    The team discussed the timeline for the new product launch and agreed on October 10th as the target date. Development needs 6 more weeks for core features, with some secondary features postponed. Design will have assets ready by mid-September but needs final specs by August 15th. Carol will update and share the project timeline tomorrow.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="privacy-section">
+                <div class="privacy-content">
+                    <div class="privacy-text">
+                        <h2 class="privacy-title">Privacy-First AI Technology</h2>
+                        <p class="privacy-description">
+                            Unlike other messaging platforms that send your data to cloud servers for AI processing, CipherChat's AI features run entirely on your device. Your messages never leave your control, ensuring complete privacy while still providing intelligent assistance.
+                        </p>
+                        <p class="privacy-description">
+                            Our unique approach combines the power of on-device machine learning with our military-grade encryption, creating an experience that's both smart and secure.
+                        </p>
+                        <a href="security" class="btn btn-primary">Learn About Our Security</a>
+                    </div>
+                    <div class="privacy-icon">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                </div>
+            </section>
+
+            <div class="cta-section">
+                <h2 class="cta-title">Experience Intelligent Secure Messaging</h2>
+                <p class="cta-text">Join thousands of users who enjoy the perfect balance of security and convenience. Sign up today and see how AI can enhance your messaging experience without compromising privacy.</p>
+                <a href="index" class="btn btn-light btn-large">Get Started Now</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container footer-container">
+            <div class="footer-links">
+                <a href="#" class="footer-link">Privacy Policy</a>
+                <a href="#" class="footer-link">Terms of Service</a>
+                <a href="#" class="footer-link">Contact Us</a>
+                <a href="#" class="footer-link">FAQ</a>
+            </div>
+            <div class="social-links">
+                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

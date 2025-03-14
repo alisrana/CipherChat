@@ -1,0 +1,724 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CipherChat - Security</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #6366f1;
+            --primary-dark: #4f46e5;
+            --secondary: #10b981;
+            --dark: #1e293b;
+            --darker: #0f172a;
+            --light: #f8fafc;
+            --gray: #64748b;
+            --light-gray: #e2e8f0;
+            --danger: #ef4444;
+            --success: #10b981;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        body {
+            background-color: var(--darker);
+            color: var(--light);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 1rem;
+            width: 100%;
+        }
+
+        /* Header Styles */
+        header {
+            background-color: var(--dark);
+            padding: 1rem 0;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .header-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--light);
+            text-decoration: none;
+        }
+
+        .logo i {
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .nav-link {
+            color: var(--light-gray);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-link:hover {
+            color: var(--light);
+        }
+
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: -4px;
+            left: 0;
+            background-color: var(--primary);
+            transition: width 0.3s ease;
+        }
+
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        .auth-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn {
+            padding: 0.5rem 1rem;
+            border-radius: 0.375rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: none;
+            outline: none;
+            font-size: 0.875rem;
+        }
+
+        .btn-primary {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background-color: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .btn-outline {
+            background-color: transparent;
+            color: var(--light);
+            border: 1px solid var(--light-gray);
+        }
+
+        .btn-outline:hover {
+            border-color: var(--light);
+            transform: translateY(-2px);
+        }
+
+        /* Main Content Styles */
+        main {
+            flex: 1;
+            padding: 3rem 0;
+        }
+
+        .page-header {
+            text-align: center;
+            margin-bottom: 3rem;
+        }
+
+        .page-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .page-subtitle {
+            font-size: 1.25rem;
+            color: var(--gray);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        .security-section {
+            background-color: var(--dark);
+            border-radius: 0.5rem;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .section-title i {
+            color: var(--primary);
+        }
+
+        .section-content {
+            color: var(--light-gray);
+            line-height: 1.7;
+        }
+
+        .section-content p {
+            margin-bottom: 1rem;
+        }
+
+        .section-content ul {
+            margin-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .section-content li {
+            margin-bottom: 0.5rem;
+        }
+
+        .encryption-diagram {
+            background-color: var(--darker);
+            border-radius: 0.5rem;
+            padding: 2rem;
+            margin: 2rem 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .diagram-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .diagram-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            width: 100%;
+        }
+
+        .diagram-step {
+            background-color: var(--dark);
+            padding: 1rem;
+            border-radius: 0.5rem;
+            min-width: 180px;
+            text-align: center;
+            position: relative;
+        }
+
+        .diagram-step:not(:last-child)::after {
+            content: '→';
+            position: absolute;
+            right: -1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            color: var(--primary);
+        }
+
+        .diagram-icon {
+            font-size: 2rem;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+        }
+
+        .diagram-text {
+            font-size: 0.875rem;
+        }
+
+        .security-card-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .security-card {
+            background-color: var(--dark);
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .security-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .security-card-icon {
+            font-size: 2rem;
+            color: var(--primary);
+        }
+
+        .security-card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+        }
+
+        .security-card-content {
+            color: var(--gray);
+            line-height: 1.6;
+            flex: 1;
+        }
+
+        .code-block {
+            background-color: var(--darker);
+            border-radius: 0.375rem;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: monospace;
+            overflow-x: auto;
+            white-space: pre;
+            color: var(--light);
+            line-height: 1.5;
+        }
+
+        .code-comment {
+            color: var(--gray);
+        }
+
+        .code-keyword {
+            color: var(--primary);
+        }
+
+        .code-string {
+            color: var(--success);
+        }
+
+        .code-function {
+            color: #f59e0b;
+        }
+
+        .faq-section {
+            margin-top: 3rem;
+        }
+
+        .faq-item {
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 1.5rem 0;
+        }
+
+        .faq-question {
+            font-size: 1.125rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-question i {
+            transition: transform 0.3s ease;
+        }
+
+        .faq-answer {
+            color: var(--gray);
+            line-height: 1.6;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease, padding 0.3s ease;
+        }
+
+        .faq-item.active .faq-question i {
+            transform: rotate(180deg);
+        }
+
+        .faq-item.active .faq-answer {
+            max-height: 500px;
+            padding-top: 0.75rem;
+        }
+
+        .cta-section {
+            background: linear-gradient(to right, var(--primary-dark), var(--primary));
+            border-radius: 0.5rem;
+            padding: 3rem 2rem;
+            text-align: center;
+            margin-top: 3rem;
+        }
+
+        .cta-title {
+            font-size: 2rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            color: white;
+        }
+
+        .cta-text {
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 2rem;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .btn-light {
+            background-color: white;
+            color: var(--primary-dark);
+        }
+
+        .btn-light:hover {
+            background-color: var(--light);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Footer Styles */
+        footer {
+            background-color: var(--dark);
+            padding: 2rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .footer-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 1.5rem;
+        }
+
+        .footer-link {
+            color: var(--gray);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-link:hover {
+            color: var(--light);
+        }
+
+        .social-links {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .social-link {
+            color: var(--gray);
+            font-size: 1.25rem;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .social-link:hover {
+            color: var(--light);
+            transform: translateY(-3px);
+        }
+
+        /* Responsive Styles */
+        @media (max-width: 768px) {
+            .header-container {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .nav-links {
+                margin: 1rem 0;
+            }
+
+            .footer-container {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+
+            .diagram-flow {
+                flex-direction: column;
+            }
+
+            .diagram-step:not(:last-child)::after {
+                content: '↓';
+                position: absolute;
+                right: 50%;
+                top: 100%;
+                transform: translateX(50%);
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container header-container">
+            <a href="index" class="logo">
+                <i class="fas fa-shield-alt"></i>
+                CipherChat
+            </a>
+            <nav class="nav-links">
+                <a href="index#features" class="nav-link">Features</a>
+                <a href="#" class="nav-link">Security</a>
+                <a href="index#ai" class="nav-link">AI Features</a>
+                <a href="index#about" class="nav-link">About</a>
+            </nav>
+            <div class="auth-buttons">
+                <a href="index" class="btn btn-outline">Login</a>
+                <a href="index" class="btn btn-primary">Sign Up</a>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <div class="container">
+            <div class="page-header">
+                <h1 class="page-title">Military-Grade Encryption</h1>
+                <p class="page-subtitle">CipherChat uses AES-256 encryption, the same standard used by governments and military organizations worldwide to protect classified information.</p>
+            </div>
+
+            <section class="security-section">
+                <h2 class="section-title">
+                    <i class="fas fa-shield-alt"></i>
+                    How Our Encryption Works
+                </h2>
+                <div class="section-content">
+                    <p>CipherChat employs end-to-end encryption using the Advanced Encryption Standard (AES) with a 256-bit key length. This means that your messages are encrypted on your device before they're sent, and can only be decrypted by the intended recipient.</p>
+                    
+                    <p>Here's what makes our encryption special:</p>
+                    
+                    <ul>
+                        <li><strong>256-bit keys:</strong> Our encryption uses keys that would take billions of years to crack using current technology.</li>
+                        <li><strong>End-to-end encryption:</strong> Messages are encrypted on your device and can only be decrypted by the recipient. Not even we can read your messages.</li>
+                        <li><strong>Perfect forward secrecy:</strong> New encryption keys are generated for each conversation, ensuring that if one key is compromised, past conversations remain secure.</li>
+                        <li><strong>Zero knowledge architecture:</strong> We don't store your encryption keys or plaintext messages on our servers.</li>
+                    </ul>
+                </div>
+
+                <div class="encryption-diagram">
+                    <div class="diagram-title">End-to-End Encryption Process</div>
+                    <div class="diagram-flow">
+                        <div class="diagram-step">
+                            <div class="diagram-icon">
+                                <i class="fas fa-keyboard"></i>
+                            </div>
+                            <div class="diagram-text">You type a message</div>
+                        </div>
+                        <div class="diagram-step">
+                            <div class="diagram-icon">
+                                <i class="fas fa-lock"></i>
+                            </div>
+                            <div class="diagram-text">Message encrypted with AES-256</div>
+                        </div>
+                        <div class="diagram-step">
+                            <div class="diagram-icon">
+                                <i class="fas fa-server"></i>
+                            </div>
+                            <div class="diagram-text">Encrypted data transmitted</div>
+                        </div>
+                        <div class="diagram-step">
+                            <div class="diagram-icon">
+                                <i class="fas fa-unlock"></i>
+                            </div>
+                            <div class="diagram-text">Recipient decrypts message</div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <section class="security-section">
+                <h2 class="section-title">
+                    <i class="fas fa-key"></i>
+                    AES-256 Encryption
+                </h2>
+                <div class="section-content">
+                    <p>The Advanced Encryption Standard (AES) is a specification for the encryption of electronic data established by the U.S. National Institute of Standards and Technology (NIST) in 2001. AES is widely used worldwide and has become the encryption standard for governments, financial institutions, and security-conscious organizations.</p>
+                    
+                    <p>AES-256 refers to the use of a 256-bit encryption key, which provides:</p>
+                    
+                    <ul>
+                        <li><strong>Computational Security:</strong> A 256-bit key has 2^256 possible combinations, making it computationally infeasible to brute-force.</li>
+                        <li><strong>Quantum Resistance:</strong> AES-256 is considered resistant to attacks from quantum computers.</li>
+                        <li><strong>Efficiency:</strong> Despite its strength, AES encryption is computationally efficient and works well on mobile devices.</li>
+                    </ul>
+
+                    <div class="code-block">
+<span class="code-comment">// Example of AES-256 encryption in JavaScript</span>
+<span class="code-keyword">function</span> <span class="code-function">encryptMessage</span>(message, key) {
+    <span class="code-keyword">return</span> CryptoJS.AES.encrypt(message, key).toString();
+}
+
+<span class="code-keyword">function</span> <span class="code-function">decryptMessage</span>(encryptedMessage, key) {
+    <span class="code-keyword">const</span> bytes = CryptoJS.AES.decrypt(encryptedMessage, key);
+    <span class="code-keyword">return</span> bytes.toString(CryptoJS.enc.Utf8);
+}
+
+<span class="code-comment">// Generate a secure 256-bit key</span>
+<span class="code-keyword">const</span> encryptionKey = CryptoJS.lib.WordArray.random(32);
+
+<span class="code-comment">// Encrypt a message</span>
+<span class="code-keyword">const</span> plaintext = <span class="code-string">"Hello, this is a secure message!"</span>;
+<span class="code-keyword">const</span> ciphertext = encryptMessage(plaintext, encryptionKey);
+
+<span class="code-comment">// Decrypt the message</span>
+<span class="code-keyword">const</span> decrypted = decryptMessage(ciphertext, encryptionKey);
+</div>
+                </div>
+            </section>
+
+            <div class="security-card-container">
+                <div class="security-card">
+                    <div class="security-card-icon">
+                        <i class="fas fa-fingerprint"></i>
+                    </div>
+                    <h3 class="security-card-title">Identity Verification</h3>
+                    <div class="security-card-content">
+                        <p>We use advanced cryptographic signatures to verify the identity of message senders, preventing impersonation attacks.</p>
+                    </div>
+                </div>
+                <div class="security-card">
+                    <div class="security-card-icon">
+                        <i class="fas fa-eye-slash"></i>
+                    </div>
+                    <h3 class="security-card-title">Zero Knowledge</h3>
+                    <div class="security-card-content">
+                        <p>Our zero-knowledge architecture means we never have access to your encryption keys or decrypted messages.</p>
+                    </div>
+                </div>
+                <div class="security-card">
+                    <div class="security-card-icon">
+                        <i class="fas fa-history"></i>
+                    </div>
+                    <h3 class="security-card-title">Message Expiration</h3>
+                    <div class="security-card-content">
+                        <p>Set messages to automatically expire after a specified time period for enhanced privacy and security.</p>
+                    </div>
+                </div>
+            </div>
+
+            <section class="security-section faq-section">
+                <h2 class="section-title">
+                    <i class="fas fa-question-circle"></i>
+                    Frequently Asked Questions
+                </h2>
+                <div class="section-content">
+                    <div class="faq-item active">
+                        <div class="faq-question">
+                            <span>What is end-to-end encryption?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>End-to-end encryption (E2EE) is a system of communication where only the communicating users can read the messages. In principle, it prevents potential eavesdroppers – including telecom providers, internet providers, and even the provider of the communication service – from being able to access the cryptographic keys needed to decrypt the conversation.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>Can CipherChat read my messages?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>No. With our end-to-end encryption, your messages are encrypted on your device and can only be decrypted by the intended recipient. We don't have the encryption keys, so we can't read your messages even if we wanted to.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>How does the AI feature work with encryption?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Our AI features work locally on your device. When you use features like smart replies or message summarization, the processing happens on your device after the messages have been decrypted. Your encrypted messages are never sent to our servers for AI processing.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>What happens if I lose my device?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>If you lose your device, you can remotely log out of your CipherChat account from another device. Additionally, you can set up a recovery key during account creation that allows you to restore access to your account and messages from a new device.</p>
+                        </div>
+                    </div>
+                    <div class="faq-item">
+                        <div class="faq-question">
+                            <span>Has CipherChat been audited?</span>
+                            <i class="fas fa-chevron-down"></i>
+                        </div>
+                        <div class="faq-answer">
+                            <p>Yes, CipherChat's encryption protocols and implementation have been independently audited by security researchers. We regularly conduct security audits and penetration testing to ensure the highest level of security for our users.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <div class="cta-section">
+                <h2 class="cta-title">Ready to Secure Your Communications?</h2>
+                <p class="cta-text">Join thousands of users who trust CipherChat for their secure messaging needs. Sign up today and experience the peace of mind that comes with truly private conversations.</p>
+                <a href="index" class="btn btn-light btn-large">Get Started</a>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container footer-container">
+            <div class="footer-links">
+                <a href="#" class="footer-link">Privacy Policy</a>
+                <a href="#" class="footer-link">Terms of Service</a>
+                <a href="#" class="footer-link">Contact Us</a>
+                <a href="#" class="footer-link">FAQ</a>
+            </div>
+            <div class="social-links">
+                <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-facebook"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // FAQ accordion functionality
+        const faqItems = document.querySelectorAll('.faq-item');
+        
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            
+            question.addEventListener('click', () => {
+                // Close all other items
+                faqItems.forEach(otherItem => {
+                    if (otherItem !== item) {
+                        otherItem.classList.remove('active');
+                    }
+                });
+                
+                // Toggle current item
+                item.classList.toggle('active');
+            });
+        });
+    </script>
+</body>
+</html>
